@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      tools:ignore="HardcodedText">
+    <item
+            android:id="@+id/directionHome"
+            android:title="Домашня"
+            android:icon="@drawable/ic_nav_home"/>
+    <item
+            android:id="@+id/directionAllHoles"
+            android:title="Всі ями"
+            android:icon="@drawable/ic_nav_statistics"/>
+    <item
+            android:id="@+id/directionAddHole"
+            android:title="Додати"
+            android:icon="@drawable/ic_nav_add_hole"/>
+    <item
+            android:id="@+id/directionNotifications"
+            android:title="Сповіщення"
+            android:icon="@drawable/ic_nav_notifications"/>
+    <item
+            android:id="@+id/directionSettings"
+            android:title="Налаштування"
+            android:icon="@drawable/ic_nav_settings"/>
+</menu>
