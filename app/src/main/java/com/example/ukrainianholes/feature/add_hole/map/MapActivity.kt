@@ -16,6 +16,8 @@ import com.example.ukrainianholes.architecture.base.Result
 import com.example.ukrainianholes.architecture.base.ResultError
 import com.example.ukrainianholes.architecture.base.ResultSuccess
 import com.example.ukrainianholes.data.LatLngAddress
+import com.example.ukrainianholes.feature.add_hole.AddPhotoDialog
+import com.example.ukrainianholes.feature.add_hole.add.AddHoleActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -34,6 +36,7 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     private var marker: Marker? = null
+    private var addPhotoDialog: AddPhotoDialog? = null
 
     private val bitmapDescriptorMarker: BitmapDescriptor by lazy {
         val markerSize = resources.getDimension(R.dimen.mapMarkerSize).toInt()
@@ -72,7 +75,7 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
         })
 
         buttonNext.setOnClickListener {
-            viewModel.takePhotoFromCamera(this)
+            showAddPhotoDialog()
         }
         viewModel.takePhotoFromGalleryIntent.observe(this, Observer { intent ->
             when (intent) {
@@ -92,10 +95,45 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
             id ?: return@Observer
 
             when (id) {
-                is ResultSuccess -> showMessage(id.data.toString())
+                is ResultSuccess -> {
+                    startAddHoleActivity(id.data)
+                }
                 is ResultError -> showError("Упс, щось пішло не так")
             }
         })
+    }
+
+    private fun startAddHoleActivity(holeId: Long? = null) {
+        val intent = Intent(this, AddHoleActivity::class.java)
+        holeId?.let {
+            intent.putExtra("123321", it)
+        }
+        startActivity(intent)
+    }
+
+    private fun showAddPhotoDialog() {
+        addPhotoDialog?.let {
+            it.show()
+            return
+        }
+
+        addPhotoDialog = object : AddPhotoDialog(this) {
+            override fun takeFromCamera() {
+                super.takeFromCamera()
+                viewModel.takePhotoFromCamera(this@MapActivity)
+            }
+
+            override fun takeFromGallery() {
+                super.takeFromGallery()
+                viewModel.takePhotoFromGallery(this@MapActivity)
+            }
+
+            override fun onSkipClick() {
+                super.onSkipClick()
+                startAddHoleActivity()
+            }
+        }
+        addPhotoDialog?.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -217,6 +255,7 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
     override fun onStop() {
         super.onStop()
         map?.onStop()
+        addPhotoDialog?.dismiss()
     }
 
     override fun onPause() {
