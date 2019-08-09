@@ -1,17 +1,17 @@
-package com.example.ukrainianholes.feature.main
+package com.example.ukrainianholes.feature.base
 
 import android.os.Bundle
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.example.ukrainianholes.R
 import com.example.ukrainianholes.architecture.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_base.*
 
-class MainActivity : BaseActivity() {
+class BaseActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_base)
 
         setupNavigation()
         setupUi()

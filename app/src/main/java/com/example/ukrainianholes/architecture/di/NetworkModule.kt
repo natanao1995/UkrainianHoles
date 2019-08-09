@@ -1,5 +1,6 @@
 package com.example.ukrainianholes.architecture.di
 
+import android.location.Geocoder
 import com.example.ukrainianholes.Constants.BASE_URL
 import com.example.ukrainianholes.architecture.interceptor.AuthInterceptor
 import com.example.ukrainianholes.architecture.interceptor.NetworkConnectionInterceptor
@@ -19,6 +20,7 @@ object NetworkModule {
         single { createTMDbService(get()) }
         single { NetworkConnectionInterceptor(androidContext()) }
         single { AuthInterceptor(get()) }
+        single { Geocoder(androidContext()) }
     }
 
     private fun createOkHttpClient(

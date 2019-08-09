@@ -5,5 +5,5 @@ object Constants {
 
     const val DATABASE_NAME = "doit_database"
 
-    const val SECURE_PREFERENCES_KEY_TOKEN = "doit_token"
+    const val MAP_INITIAL_ZOOM = 15f //approximately Vozdvizhenka zoom
 }

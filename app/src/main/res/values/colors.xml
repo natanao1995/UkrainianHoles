@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#75CAC7</color>
     <color name="colorBlack">#000</color>
     <color name="colorWhite">#fff</color>
     <color name="colorTransparent">#00FFFFFF</color>
     <color name="bottomNavigationBgColor">#00E5E5E5</color>
-    <color name="bottomNavigationSelectedItemColor">#AB1D25</color>
-    <color name="bottomNavigationUnselectedItemColor">#A1A1A1</color>
+    <color name="bottomNavigationSelectedItemColor">#65c7c3</color>
+    <color name="bottomNavigationUnselectedItemColor">#bbbbbb</color>
     <color name="statusNew">#007AFF</color>
     <color name="statusInProcess">#FBBC05</color>
     <color name="statusDone">#009028</color>

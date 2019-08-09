@@ -3,23 +3,15 @@
       xmlns:android="http://schemas.android.com/apk/res/android"
       tools:ignore="HardcodedText">
     <item
-            android:id="@+id/directionHome"
-            android:title="Домашня"
-            android:icon="@drawable/ic_nav_home"/>
+            android:id="@+id/directionMain"
+            android:title="Головна"
+            android:icon="@drawable/ic_nav_main"/>
     <item
-            android:id="@+id/directionAllHoles"
-            android:title="Всі ями"
-            android:icon="@drawable/ic_nav_statistics"/>
+            android:id="@+id/directionServices"
+            android:title="Сервіси"
+            android:icon="@drawable/ic_nav_services"/>
     <item
-            android:id="@+id/directionAddHole"
-            android:title="Додати"
-            android:icon="@drawable/ic_nav_add_hole"/>
-    <item
-            android:id="@+id/directionNotifications"
-            android:title="Сповіщення"
-            android:icon="@drawable/ic_nav_notifications"/>
-    <item
-            android:id="@+id/directionSettings"
-            android:title="Налаштування"
-            android:icon="@drawable/ic_nav_settings"/>
+            android:id="@+id/directionProfile"
+            android:title="Профіль"
+            android:icon="@drawable/ic_nav_profile"/>
 </menu>
