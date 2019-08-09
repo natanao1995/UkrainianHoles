@@ -29,7 +29,7 @@ class HomeActivity : BaseActivity() {
             swipeRefresh.isRefreshing = false
             when (it) {
                 is ResultSuccess -> {
-                    (recyclerLastWins.adapter as? HoleRecyclerAdapter)?.setItems(it.data.last)
+                    (recyclerLastWins.adapter as? HoleRecyclerAdapter)?.setItems(it.data.holes)
                     textNewAmount?.text = it.data.createdCount.toString()
                     textInProgressAmount?.text = it.data.inProgressCount.toString()
                     textDoneAmount?.text = it.data.fixedCount.toString()

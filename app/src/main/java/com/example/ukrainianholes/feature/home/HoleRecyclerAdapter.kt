@@ -12,7 +12,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.ukrainianholes.Constants
 import com.example.ukrainianholes.R
-import com.example.ukrainianholes.data.remote.entity.GetStatsResponse
+import com.example.ukrainianholes.data.remote.entity.HoleResponse
 import com.example.ukrainianholes.data.remote.entity.Status
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.recycler_item_last_win.*
@@ -20,11 +20,11 @@ import org.jetbrains.annotations.NotNull
 
 open class HoleRecyclerAdapter : RecyclerView.Adapter<HoleRecyclerAdapter.LastWinViewHolder>() {
 
-    open fun onItemClick(lastWin: GetStatsResponse.Last) {}
+    open fun onItemClick(lastWin: HoleResponse) {}
 
-    private val items = mutableListOf<GetStatsResponse.Last>()
+    private val items = mutableListOf<HoleResponse>()
 
-    fun setItems(items: List<GetStatsResponse.Last>) {
+    fun setItems(items: List<HoleResponse>) {
         this.items.clear()
         this.items.addAll(items)
         notifyDataSetChanged()
@@ -51,7 +51,7 @@ open class HoleRecyclerAdapter : RecyclerView.Adapter<HoleRecyclerAdapter.LastWi
 
     class LastWinViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
         LayoutContainer {
-        fun bind(lastWin: GetStatsResponse.Last) {
+        fun bind(lastWin: HoleResponse) {
             textAddress.text = lastWin.address
             textDays.text = lastWin.insertedAt
             textLikes.text = lastWin.likesNumber.toString()
