@@ -53,7 +53,6 @@ open class HoleRecyclerAdapter : RecyclerView.Adapter<HoleRecyclerAdapter.LastWi
         LayoutContainer {
         fun bind(lastWin: HoleResponse) {
             textAddress.text = lastWin.address
-            textDays.text = lastWin.insertedAt
             textLikes.text = lastWin.likesNumber.toString()
             if (lastWin.like) {
                 textLikes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_filled, 0, 0, 0)
@@ -89,6 +88,15 @@ open class HoleRecyclerAdapter : RecyclerView.Adapter<HoleRecyclerAdapter.LastWi
                 .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(16)))
                 .error(ColorDrawable(ContextCompat.getColor(imageAvatar.context, R.color.placeholderGray)))
                 .into(imageAvatar)
+
+            val date = lastWin.insertedAt * 1000
+            val now = System.currentTimeMillis()
+            val diff = (now - date) / 1000 / 60 / 60 / 24
+            textDays.text = when {
+                (diff % 10 == 1L) -> "$diff день"
+                (diff % 10 == 2L || diff % 10 == 3L || diff % 10 == 4L) -> "$diff дні"
+                else -> "$diff днів"
+            }
         }
     }
 }

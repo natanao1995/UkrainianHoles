@@ -13,7 +13,7 @@ data class HoleResponse(
     @SerializedName("fixed_photos")
     val fixedPhotos: List<FixedPhoto>,
     @SerializedName("inserted_at")
-    val insertedAt: String,
+    val insertedAt: Long,
     @SerializedName("lat")
     val lat: Double,
     @SerializedName("like")
@@ -27,5 +27,5 @@ data class HoleResponse(
     @SerializedName("status")
     val status: Status,
     @SerializedName("updated_at")
-    val updatedAt: String
+    val updatedAt: Long
 )
