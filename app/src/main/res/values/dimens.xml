@@ -4,4 +4,5 @@
     <dimen name="materialIconSize">48dp</dimen>
     <dimen name="materialIconPadding">12dp</dimen>
     <dimen name="mapMarkerSize">48dp</dimen>
+    <dimen name="chooseButtonRadius">16dp</dimen>
 </resources>

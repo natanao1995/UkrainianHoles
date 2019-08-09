@@ -12,4 +12,6 @@
     <color name="statusDone">#009028</color>
     <color name="statusConfirmed">#009028</color>
     <color name="placeholderGray">#ddd</color>
+    <color name="chooseDialogButtonColor">#ffffff</color>
+    <color name="dividerColor">#333333</color>
 </resources>

@@ -76,6 +76,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".feature.home.HomeActivity"/>
+        <activity android:name=".feature.add_hole.add.AddHoleActivity"/>
     </application>
 
 </manifest>

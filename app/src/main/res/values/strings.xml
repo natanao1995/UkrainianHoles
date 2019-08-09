@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Ukrainian Holes</string>
     <string name="title_activity_map">Map</string>
+    <string name="take_photo_from_camera">Зробити фото з камери</string>
+    <string name="skip">Пропустити цей пункт</string>
+    <string name="take_photo_from_gallery">Обрати фото з галереї</string>
 </resources>
