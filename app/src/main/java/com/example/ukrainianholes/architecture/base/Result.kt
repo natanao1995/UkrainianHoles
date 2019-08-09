@@ -7,7 +7,7 @@ data class ResultSuccess<T>(
 ) : Result<T>()
 
 data class ResultError<T>(
-    val exception: Exception
+    val exception: Exception? = null
 ) : Result<T>()
 
 class ResultLoading<T>(

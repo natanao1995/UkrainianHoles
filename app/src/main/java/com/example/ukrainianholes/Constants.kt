@@ -1,7 +1,7 @@
 package com.example.ukrainianholes
 
 object Constants {
-    const val BASE_URL = "http://testapi.doitserver.in.ua/api/"
+    const val BASE_URL = "http://192.168.34.166:8080/"
 
     const val DATABASE_NAME = "doit_database"
 

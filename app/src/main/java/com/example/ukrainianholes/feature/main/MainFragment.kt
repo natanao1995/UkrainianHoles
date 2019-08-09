@@ -17,7 +17,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        buttonStartFun.setOnClickListener {
+        constraintHoles.setOnClickListener {
             startActivity(Intent(requireContext(), HomeActivity::class.java))
         }
     }

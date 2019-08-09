@@ -1,6 +1,8 @@
 package com.example.ukrainianholes.feature.map
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -11,6 +13,7 @@ import com.example.ukrainianholes.Constants.MAP_INITIAL_ZOOM
 import com.example.ukrainianholes.R
 import com.example.ukrainianholes.architecture.base.BaseActivity
 import com.example.ukrainianholes.architecture.base.Result
+import com.example.ukrainianholes.architecture.base.ResultError
 import com.example.ukrainianholes.architecture.base.ResultSuccess
 import com.example.ukrainianholes.data.LatLngAddress
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -40,6 +43,10 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
         BitmapDescriptorFactory.fromBitmap(smallBitmapFar)
     }
 
+    companion object {
+        const val REQUEST_CODE_GALLERY = 1
+        const val REQUEST_CODE_CAMERA = 2
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +70,48 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
         viewModel.latLngAddressLiveData.observe(this, Observer { latLngAddress ->
             updateLatLngAddress(latLngAddress)
         })
+
+        buttonNext.setOnClickListener {
+            viewModel.takePhotoFromCamera(this)
+        }
+        viewModel.takePhotoFromGalleryIntent.observe(this, Observer { intent ->
+            when (intent) {
+                is ResultSuccess -> startActivityForResult(intent.data, REQUEST_CODE_GALLERY)
+                is ResultError -> showError("Упс, щось пішло не так")
+            }
+        })
+
+        viewModel.takePhotoFromCameraIntent.observe(this, Observer { intent ->
+            when (intent) {
+                is ResultSuccess -> startActivityForResult(intent.data, REQUEST_CODE_CAMERA)
+                is ResultError -> showError("Упс, щось пішло не так")
+            }
+        })
+
+        viewModel.uploadedFileIdLiveData.observe(this, Observer { id ->
+            id ?: return@Observer
+
+            when (id) {
+                is ResultSuccess -> showMessage(id.data.toString())
+                is ResultError -> showError("Упс, щось пішло не так")
+            }
+        })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_CODE_GALLERY -> {
+                    showMessage(data?.data.toString())
+                    viewModel.uploadFileFromGallery(data?.data)
+                }
+                REQUEST_CODE_CAMERA -> {
+                    showMessage(viewModel.imageUri.toString())
+                    viewModel.uploadFileFromCamera()
+                }
+            }
+        }
     }
 
     private fun updateLatLngAddress(latLngAddress: Result<LatLngAddress>?) {
@@ -119,10 +168,12 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
             buttonGrantPermission?.visibility = View.VISIBLE
             map?.visibility = View.GONE
             constraintSearch?.visibility = View.GONE
+            buttonNext?.visibility = View.GONE
         } else {
             buttonGrantPermission?.visibility = View.GONE
             map?.visibility = View.VISIBLE
             constraintSearch?.visibility = View.VISIBLE
+            buttonNext?.visibility = View.VISIBLE
             map?.getMapAsync(this)
         }
     }
@@ -131,6 +182,16 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+
+        mMap.uiSettings.apply {
+            isMyLocationButtonEnabled = true
+        }
+
+        mMap.setOnMapClickListener { latLng ->
+            latLng ?: return@setOnMapClickListener
+
+            viewModel.updateLatLngAddress(latLng)
+        }
 
         fusedLocationProviderClient.lastLocation?.addOnSuccessListener {
             it ?: return@addOnSuccessListener
