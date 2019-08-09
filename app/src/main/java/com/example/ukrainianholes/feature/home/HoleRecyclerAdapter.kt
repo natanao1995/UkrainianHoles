@@ -82,14 +82,13 @@ open class HoleRecyclerAdapter : RecyclerView.Adapter<HoleRecyclerAdapter.LastWi
                     textStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_star, 0, 0, 0)
                 }
             }
-            lastWin.photos.firstOrNull()?.id?.let {
-                Glide
-                    .with(imageAvatar)
-                    .load("${Constants.BASE_URL}file/$it")
-                    .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(16)))
-                    .error(ColorDrawable(ContextCompat.getColor(imageAvatar.context, R.color.placeholderGray)))
-                    .into(imageAvatar)
-            }
+            Glide.with(imageAvatar).clear(imageAvatar)
+            Glide
+                .with(imageAvatar)
+                .load("${Constants.BASE_URL}file/${lastWin.photos.firstOrNull()?.id}")
+                .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(16)))
+                .error(ColorDrawable(ContextCompat.getColor(imageAvatar.context, R.color.placeholderGray)))
+                .into(imageAvatar)
         }
     }
 }

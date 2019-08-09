@@ -7,6 +7,7 @@ import com.example.ukrainianholes.R
 import com.example.ukrainianholes.architecture.base.BaseActivity
 import com.example.ukrainianholes.architecture.base.ResultSuccess
 import com.example.ukrainianholes.feature.add_hole.map.MapActivity
+import com.example.ukrainianholes.feature.all_holes.AllHolesActivity
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.view_stats.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -49,6 +50,9 @@ class HomeActivity : BaseActivity() {
         }
         swipeRefresh.setOnRefreshListener {
             viewModel.getStats()
+        }
+        constraintAll.setOnClickListener {
+            startActivity(Intent(this, AllHolesActivity::class.java))
         }
     }
 }

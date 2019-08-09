@@ -1,13 +1,12 @@
 package com.example.ukrainianholes.data.remote
 
 import com.example.ukrainianholes.data.remote.entity.FileResponse
+import com.example.ukrainianholes.data.remote.entity.Filter.MY
 import com.example.ukrainianholes.data.remote.entity.GetStatsResponse
+import com.example.ukrainianholes.data.remote.entity.HoleResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
+import retrofit2.http.*
 
 interface ApiService {
     @Multipart
@@ -18,4 +17,11 @@ interface ApiService {
 
     @GET("stats")
     suspend fun getStats(): Response<GetStatsResponse>
+
+    @GET("yamas")
+    suspend fun getAllHoles(
+        @Query("filter") filter: String = MY,
+        @Query("lat") lat: Double?,
+        @Query("lng") lng: Double?
+    ): Response<List<HoleResponse>>
 }
