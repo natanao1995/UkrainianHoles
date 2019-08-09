@@ -147,6 +147,10 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
             viewModel.checkLocationPermissionGranted(this)
         }
 
+        imageClose.setOnClickListener {
+            onBackPressed()
+        }
+
         imageSearch.setOnClickListener {
             viewModel.updateLatLngAddress(editTextSearch.text.toString())
             hideKeyboard()

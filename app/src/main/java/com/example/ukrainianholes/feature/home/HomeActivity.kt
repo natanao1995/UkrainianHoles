@@ -41,6 +41,9 @@ class HomeActivity : BaseActivity() {
     private fun setupUi() {
         recyclerLastWins.adapter = HoleRecyclerAdapter()
         recyclerLastWins.isNestedScrollingEnabled = false
+        imageBack.setOnClickListener {
+            onBackPressed()
+        }
         constraintAdd.setOnClickListener {
             startActivity(Intent(this, MapActivity::class.java))
         }
