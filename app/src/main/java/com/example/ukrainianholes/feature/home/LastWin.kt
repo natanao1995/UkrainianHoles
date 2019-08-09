@@ -5,5 +5,6 @@ data class LastWin(
     val status: String,
     val address: String,
     val date: String,
-    val daysFromOpen: String
+    val daysFromOpen: String,
+    val url: String
 )

@@ -47,7 +47,7 @@
         </provider>
 
         <activity
-                android:name=".feature.map.MapActivity"
+                android:name="com.example.ukrainianholes.feature.add_hole.map.MapActivity"
                 android:label="@string/title_activity_map">
         </activity>
         <activity

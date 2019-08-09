@@ -1,4 +1,4 @@
-package com.example.ukrainianholes.feature.map
+package com.example.ukrainianholes.feature.add_hole.map
 
 import android.Manifest
 import android.app.Activity

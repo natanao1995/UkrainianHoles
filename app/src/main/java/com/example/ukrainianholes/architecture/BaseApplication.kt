@@ -1,7 +1,6 @@
 package com.example.ukrainianholes.architecture
 
 import android.app.Application
-import com.example.ukrainianholes.architecture.di.AuthModule.authModule
 import com.example.ukrainianholes.architecture.di.InteractorModule.interactorModule
 import com.example.ukrainianholes.architecture.di.NetworkModule.networkModule
 import com.example.ukrainianholes.architecture.di.ViewModelModule.viewModelModule
@@ -16,7 +15,6 @@ class BaseApplication : Application() {
             androidContext(this@BaseApplication)
 
             modules(
-                authModule,
                 viewModelModule,
                 interactorModule,
                 networkModule

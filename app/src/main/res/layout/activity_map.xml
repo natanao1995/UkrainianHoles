@@ -5,6 +5,41 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/materialToolbarHeight"
+            android:background="#f6f6f6"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Додати локацію"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                style="@style/TextViewToolbar"/>
+
+        <ImageView
+                android:id="@+id/imageClose"
+                android:layout_width="@dimen/materialIconSize"
+                android:layout_height="@dimen/materialIconSize"
+                android:padding="@dimen/materialIconPadding"
+                android:src="@drawable/ic_close"
+                android:tint="#343137"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dadada"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <Button
             android:id="@+id/buttonGrantPermission"
             android:layout_width="0dp"
@@ -19,10 +54,14 @@
 
     <com.google.android.gms.maps.MapView
             android:id="@+id/map"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:visibility="gone"
-            tools:visibility="visible"/>
+            tools:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/constraintToolbar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
     <Button
             android:id="@+id/buttonNext"
@@ -33,11 +72,10 @@
             tools:visibility="visible"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="32dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            style="@style/AppTheme.ButtonBlack"/>
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintSearch"
@@ -48,11 +86,10 @@
             android:layout_marginTop="16dp"
             android:visibility="gone"
             tools:visibility="visible"
-            android:elevation="4dp"
-            android:background="@drawable/bg_search_input"
+            android:background="@drawable/bg_input"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/constraintToolbar">
 
         <EditText
                 android:id="@+id/editTextSearch"

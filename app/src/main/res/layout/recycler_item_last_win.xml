@@ -1,64 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false">
 
-    <ImageView
-            android:id="@+id/imageAvatar"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            tools:background="@color/bottomNavigationSelectedItemColor"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"/>
-
-    <TextView
-            android:id="@+id/textStatus"
-            android:layout_width="0dp"
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Відремонтовано"
-            android:padding="4dp"
-            android:background="@color/statusDone"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/imageAvatar"/>
+            android:background="@color/colorWhite"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp">
+
+            <ImageView
+                    android:id="@+id/imageAvatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:adjustViewBounds="true"
+                    tools:background="#ddd"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                    android:id="@+id/textStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:paddingRight="12dp"
+                    android:paddingLeft="12dp"
+                    android:textColor="@color/colorWhite"
+                    android:drawablePadding="4dp"
+                    tools:drawableLeft="@drawable/ic_star"
+                    android:text="В роботі"
+                    android:background="@color/statusConfirmed"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <TextView
+                    android:id="@+id/textAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/materialIconSize"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="8dp"
+                    app:layout_constraintHorizontal_weight="7"
+                    tools:text="Лололо яка довга адреса"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:drawableLeft="@drawable/ic_location"
+                    app:layout_constraintTop_toBottomOf="@id/imageAvatar"
+                    app:layout_constraintRight_toLeftOf="@id/textDays"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <TextView
+                    android:id="@+id/textDays"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/materialIconSize"
+                    tools:text="7 днів"
+                    android:maxLines="1"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="8dp"
+                    android:drawableLeft="@drawable/ic_calendar"
+                    app:layout_constraintHorizontal_weight="3"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/textAddress"
+                    app:layout_constraintTop_toBottomOf="@id/imageAvatar"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
     <TextView
-            android:id="@+id/textAddress"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            tools:text="м. Київ, вул. Єлізавети Чавдар 13"
-            android:textColor="#969696"
-            android:padding="4dp"
-            app:layout_constraintLeft_toRightOf="@id/imageAvatar"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textStatus"
-            app:layout_constraintBottom_toTopOf="@id/textDate"
-            android:layout_marginLeft="8dp"/>
-
-    <TextView
-            android:id="@+id/textDate"
+            android:id="@+id/textLikes"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="07.09.2019"
-            android:padding="4dp"
-            app:layout_constraintLeft_toRightOf="@id/imageAvatar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginLeft="8dp"/>
-
-    <TextView
-            android:id="@+id/textDaysFromOpen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="7 днів"
-            android:padding="4dp"
-            android:background="@color/statusInProcess"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="24dp"
+            tools:text="456"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:layout_marginRight="8dp"
+            android:elevation="12dp"
+            android:outlineProvider="none"
+            tools:drawableLeft="@drawable/ic_heart_empty"
+            android:background="@drawable/bg_like"
+            android:layout_gravity="right"/>
+</FrameLayout>

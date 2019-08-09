@@ -19,7 +19,7 @@ object NetworkModule {
         single { createRetrofitInstance(get()) }
         single { createTMDbService(get()) }
         single { NetworkConnectionInterceptor(androidContext()) }
-        single { AuthInterceptor(get()) }
+        single { AuthInterceptor(androidContext()) }
         single { Geocoder(androidContext()) }
     }
 
