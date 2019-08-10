@@ -14,7 +14,6 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.ukrainianholes.R
 import kotlinx.android.synthetic.main.activity_photo_viewer.*
-import kotlinx.android.synthetic.main.recycler_item_last_win.*
 
 class PhotoViewerActivity : AppCompatActivity() {
 
@@ -51,7 +50,7 @@ class PhotoViewerActivity : AppCompatActivity() {
                     return false
                 }
             })
-            .error(ColorDrawable(ContextCompat.getColor(imageAvatar.context, R.color.placeholderGray)))
+            .error(ColorDrawable(ContextCompat.getColor(imageMain.context, R.color.placeholderGray)))
             .into(imageMain)
     }
 
