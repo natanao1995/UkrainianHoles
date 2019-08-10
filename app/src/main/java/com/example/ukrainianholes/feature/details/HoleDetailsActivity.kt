@@ -21,6 +21,7 @@ import com.example.ukrainianholes.data.remote.entity.AccidentRate.LOW
 import com.example.ukrainianholes.data.remote.entity.AccidentRate.MEDIUM
 import com.example.ukrainianholes.data.remote.entity.HoleResponse
 import com.example.ukrainianholes.data.remote.entity.Photo
+import com.example.ukrainianholes.data.remote.entity.Status
 import com.example.ukrainianholes.feature.add_hole.add.PhotoItem
 import com.example.ukrainianholes.feature.add_hole.add.PhotoRecyclerAdapter
 import com.example.ukrainianholes.feature.add_hole.map.MapActivity
@@ -137,6 +138,29 @@ class HoleDetailsActivity : AppCompatActivity() {
     private fun loadHoleInfo(hole: HoleResponse) {
         loadAvatar(hole.photos.firstOrNull())
 
+        when (hole.status) {
+            Status.CREATED -> {
+                textStatus.text = "Нова"
+                textStatus.setBackgroundResource(R.drawable.bg_status_new)
+                textStatus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+            }
+            Status.IN_PROGRESS -> {
+                textStatus.text = "В роботі"
+                textStatus.setBackgroundResource(R.drawable.bg_status_in_progress)
+                textStatus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+            }
+            Status.FIXED -> {
+                textStatus.text = "Готово"
+                textStatus.setBackgroundResource(R.drawable.bg_status_done)
+                textStatus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+            }
+            Status.CONFIRMED -> {
+                textStatus.text = "Перевірено заявником"
+                textStatus.setBackgroundResource(R.drawable.bg_status_confirmed)
+                textStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_star, 0, 0, 0)
+            }
+        }
+
         if (hole.comment.isBlank()) {
             textComment.visibility = View.GONE
         } else {
@@ -188,6 +212,15 @@ class HoleDetailsActivity : AppCompatActivity() {
         } else {
             textNow.visibility = View.GONE
             recyclerNow.visibility = View.GONE
+        }
+
+        if (hole.inspectorsComment.isNotBlank()) {
+            textInspectorAnswer.text = hole.inspectorsComment
+            textLabel.visibility = View.VISIBLE
+            textInspectorAnswer.visibility = View.VISIBLE
+        } else {
+            textLabel.visibility = View.GONE
+            textInspectorAnswer.visibility = View.GONE
         }
     }
 
