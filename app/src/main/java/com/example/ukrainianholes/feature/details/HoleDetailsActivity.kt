@@ -139,6 +139,8 @@ class HoleDetailsActivity : AppCompatActivity() {
         textComment.text = hole.comment
         textAddress.text = hole.address
 
+        textTitle.text = "Яма #${hole.id}"
+
         updateLikeState(hole.like)
         showLikeProgress(false)
 
