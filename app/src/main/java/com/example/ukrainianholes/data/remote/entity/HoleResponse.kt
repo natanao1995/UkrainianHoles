@@ -32,5 +32,5 @@ data class HoleResponse(
     @SerializedName("updated_at")
     val updatedAt: Long,
     @SerializedName("accident_rate")
-    val accidentRate: Int
+    var accidentRate: Int
 ) : Parcelable

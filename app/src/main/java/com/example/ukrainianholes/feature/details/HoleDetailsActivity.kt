@@ -16,6 +16,9 @@ import com.example.ukrainianholes.R
 import com.example.ukrainianholes.architecture.base.ResultError
 import com.example.ukrainianholes.architecture.base.ResultLoading
 import com.example.ukrainianholes.architecture.base.ResultSuccess
+import com.example.ukrainianholes.data.remote.entity.AccidentRate.HIGH
+import com.example.ukrainianholes.data.remote.entity.AccidentRate.LOW
+import com.example.ukrainianholes.data.remote.entity.AccidentRate.MEDIUM
 import com.example.ukrainianholes.data.remote.entity.HoleResponse
 import com.example.ukrainianholes.data.remote.entity.Photo
 import com.example.ukrainianholes.feature.add_hole.map.MapActivity
@@ -81,13 +84,13 @@ class HoleDetailsActivity : AppCompatActivity() {
 
     private fun showLikeImage() {
         Glide.with(imageLike)
-            .load(R.drawable.ic_like)
+            .load(R.drawable.ic_heart_empty)
             .into(imageLike)
     }
 
     private fun showUnlikeImage() {
         Glide.with(imageLike)
-            .load(R.drawable.ic_unlike)
+            .load(R.drawable.ic_heart_filled)
             .into(imageLike)
     }
 
@@ -115,6 +118,15 @@ class HoleDetailsActivity : AppCompatActivity() {
         imageLike.setOnClickListener {
             viewModel.likeHole()
         }
+        cardLow.setOnClickListener {
+            viewModel.setAccidentRate(LOW)
+        }
+        cardMedium.setOnClickListener {
+            viewModel.setAccidentRate(MEDIUM)
+        }
+        cardHigh.setOnClickListener {
+            viewModel.setAccidentRate(HIGH)
+        }
     }
 
     private fun loadHoleInfo(hole: HoleResponse) {
@@ -124,6 +136,24 @@ class HoleDetailsActivity : AppCompatActivity() {
 
         updateLikeState(hole.like)
         showLikeProgress(false)
+
+        when (hole.accidentRate) {
+            1 -> {
+                cardLow.foreground = getDrawable(R.drawable.bg_button_stroke)
+                cardMedium.foreground = null
+                cardHigh.foreground = null
+            }
+            2 -> {
+                cardLow.foreground = null
+                cardMedium.foreground = getDrawable(R.drawable.bg_button_stroke)
+                cardHigh.foreground = null
+            }
+            3 -> {
+                cardLow.foreground = null
+                cardMedium.foreground = null
+                cardHigh.foreground = getDrawable(R.drawable.bg_button_stroke)
+            }
+        }
     }
 
     private fun loadAvatar(photo: Photo?) {

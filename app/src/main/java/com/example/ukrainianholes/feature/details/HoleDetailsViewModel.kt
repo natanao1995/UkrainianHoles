@@ -8,6 +8,7 @@ import com.example.ukrainianholes.architecture.base.Result
 import com.example.ukrainianholes.architecture.base.ResultError
 import com.example.ukrainianholes.data.remote.entity.HoleResponse
 import com.example.ukrainianholes.data.remote.entity.Photo
+import com.example.ukrainianholes.util.notifyObserver
 import kotlinx.coroutines.launch
 
 class HoleDetailsViewModel(
@@ -39,6 +40,16 @@ class HoleDetailsViewModel(
 
     fun getFullPhotoUrl(photo: Photo?): String {
         return "${Constants.BASE_URL}file/${photo?.id}"
+    }
+
+    fun setAccidentRate(accidentRate: Int) {
+        launch {
+            holeLiveData.value?.accidentRate = accidentRate
+            holeLiveData.notifyObserver()
+            holeLiveData.value?.id?.let { id ->
+                holeDetailsInteractor.changeAccidentRate(id, accidentRate)
+            }
+        }
     }
 
     fun likeHole() = launch {

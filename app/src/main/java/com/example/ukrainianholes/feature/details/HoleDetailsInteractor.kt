@@ -18,4 +18,9 @@ class HoleDetailsInteractor(
         processRequest {
             apiService.unsetLike(holeId)
         }.mapTo { false }
+
+    suspend fun changeAccidentRate(holeId: Long, rate: Int): Result<Unit> =
+        processRequest {
+            apiService.changeAccidentRate(holeId, rate)
+        }.mapTo { }
 }

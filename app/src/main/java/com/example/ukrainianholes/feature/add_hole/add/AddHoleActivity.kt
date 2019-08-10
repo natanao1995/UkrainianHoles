@@ -7,6 +7,9 @@ import com.example.ukrainianholes.R
 import com.example.ukrainianholes.architecture.base.BaseActivity
 import com.example.ukrainianholes.architecture.base.ResultError
 import com.example.ukrainianholes.architecture.base.ResultSuccess
+import com.example.ukrainianholes.data.remote.entity.AccidentRate.HIGH
+import com.example.ukrainianholes.data.remote.entity.AccidentRate.LOW
+import com.example.ukrainianholes.data.remote.entity.AccidentRate.MEDIUM
 import com.example.ukrainianholes.feature.home.HomeActivity
 import com.example.ukrainianholes.util.afterTextChanged
 import kotlinx.android.synthetic.main.activity_add_hole.*
@@ -28,7 +31,10 @@ class AddHoleActivity : BaseActivity() {
         setContentView(R.layout.activity_add_hole)
 
         intent?.let {
-            viewModel.addPhoto(intent.getLongExtra(EXTRA_KEY_IMAGE_ID, -1))
+            val photoId = intent.getLongExtra(EXTRA_KEY_IMAGE_ID, -1)
+            if (photoId != -1L) {
+                viewModel.addPhoto(photoId)
+            }
             viewModel.setLatLng(
                 intent.getDoubleExtra(EXTRA_KEY_LAT, 0.0),
                 intent.getDoubleExtra(EXTRA_KEY_LNG, 0.0)
@@ -62,16 +68,43 @@ class AddHoleActivity : BaseActivity() {
             hole ?: return@Observer
 
             (recyclerPhotos.adapter as? PhotoRecyclerAdapter)?.setItems(hole.photos)
+            when (hole.accidentRate) {
+                1 -> {
+                    cardLow.foreground = getDrawable(R.drawable.bg_button_stroke)
+                    cardMedium.foreground = null
+                    cardHigh.foreground = null
+                }
+                2 -> {
+                    cardLow.foreground = null
+                    cardMedium.foreground = getDrawable(R.drawable.bg_button_stroke)
+                    cardHigh.foreground = null
+                }
+                3 -> {
+                    cardLow.foreground = null
+                    cardMedium.foreground = null
+                    cardHigh.foreground = getDrawable(R.drawable.bg_button_stroke)
+                }
+            }
         })
     }
 
     private fun setupUi() {
         editTextComment.afterTextChanged {
-            viewModel.setAddress(it)
+            viewModel.setComment(it)
         }
         recyclerPhotos.adapter = PhotoRecyclerAdapter()
         buttonNext.setOnClickListener {
             viewModel.addHole()
+        }
+
+        cardLow.setOnClickListener {
+            viewModel.setAccidentRate(LOW)
+        }
+        cardMedium.setOnClickListener {
+            viewModel.setAccidentRate(MEDIUM)
+        }
+        cardHigh.setOnClickListener {
+            viewModel.setAccidentRate(HIGH)
         }
     }
 }

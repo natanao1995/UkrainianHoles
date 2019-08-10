@@ -7,6 +7,7 @@ import com.example.ukrainianholes.architecture.base.ResultError
 import com.example.ukrainianholes.architecture.base.mapTo
 import com.example.ukrainianholes.data.remote.entity.AccidentRate.LOW
 import com.example.ukrainianholes.data.remote.entity.AddHoleRequest
+import com.example.ukrainianholes.util.notifyObserver
 import kotlinx.coroutines.launch
 
 class AddHoleViewModel(
@@ -38,21 +39,26 @@ class AddHoleViewModel(
 
     fun setAddress(address: String) {
         newHoleLiveData.value?.address = address
+        newHoleLiveData.notifyObserver()
     }
 
     fun setComment(comment: String) {
         newHoleLiveData.value?.comment = comment
+        newHoleLiveData.notifyObserver()
     }
 
     fun setAccidentRate(accidentRate: Int) {
         newHoleLiveData.value?.accidentRate = accidentRate
+        newHoleLiveData.notifyObserver()
     }
 
     fun addPhoto(id: Long) {
         newHoleLiveData.value?.photos?.add(id)
+        newHoleLiveData.notifyObserver()
     }
 
     fun removePhoto(id: Long) {
         newHoleLiveData.value?.photos?.remove(id)
+        newHoleLiveData.notifyObserver()
     }
 }

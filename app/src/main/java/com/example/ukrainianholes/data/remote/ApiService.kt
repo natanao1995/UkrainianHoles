@@ -37,4 +37,10 @@ interface ApiService {
 
     @DELETE("yamas/{id}/like")
     suspend fun unsetLike(@Path(value = "id") id: Long): Response<ResponseBody>
+
+    @POST("yamas/{id}/accident_rate")
+    suspend fun changeAccidentRate(
+        @Path(value = "id") id: Long,
+        @Query("accident_rate") accidentRate: Int
+    ): Response<ResponseBody>
 }
