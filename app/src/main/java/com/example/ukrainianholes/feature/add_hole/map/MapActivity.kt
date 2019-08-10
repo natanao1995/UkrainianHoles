@@ -80,14 +80,20 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
         viewModel.takePhotoFromGalleryIntent.observe(this, Observer { intent ->
             when (intent) {
                 is ResultSuccess -> startActivityForResult(intent.data, REQUEST_CODE_GALLERY)
-                is ResultError -> showError("Упс, щось пішло не так")
+                is ResultError -> {
+                    hideProgress()
+                    showError("Упс, щось пішло не так")
+                }
             }
         })
 
         viewModel.takePhotoFromCameraIntent.observe(this, Observer { intent ->
             when (intent) {
                 is ResultSuccess -> startActivityForResult(intent.data, REQUEST_CODE_CAMERA)
-                is ResultError -> showError("Упс, щось пішло не так")
+                is ResultError -> {
+                    hideProgress()
+                    showError("Упс, щось пішло не так")
+                }
             }
         })
 
@@ -95,10 +101,11 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
             id ?: return@Observer
 
             when (id) {
-                is ResultSuccess -> {
-                    startAddHoleActivity(id.data)
+                is ResultSuccess -> startAddHoleActivity(id.data)
+                is ResultError -> {
+                    hideProgress()
+                    showError("Упс, щось пішло не так")
                 }
-                is ResultError -> showError("Упс, щось пішло не так")
             }
         })
     }
@@ -134,11 +141,13 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
         addPhotoDialog = object : AddPhotoDialog(this) {
             override fun takeFromCamera() {
                 super.takeFromCamera()
+                showProgress()
                 viewModel.takePhotoFromCamera(this@MapActivity)
             }
 
             override fun takeFromGallery() {
                 super.takeFromGallery()
+                showProgress()
                 viewModel.takePhotoFromGallery(this@MapActivity)
             }
 
@@ -148,6 +157,18 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
             }
         }
         addPhotoDialog?.show()
+    }
+
+    private fun showProgress() {
+        buttonNext.isEnabled = false
+        buttonNext.text = ""
+        progressMap.visibility = View.VISIBLE
+    }
+
+    private fun hideProgress() {
+        buttonNext.isEnabled = true
+        buttonNext.text = "Далі"
+        progressMap.visibility = View.GONE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
