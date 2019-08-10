@@ -12,6 +12,7 @@ open class AddPhotoDialog(context: Context) : Dialog(context, R.style.ChooseDial
         setContentView(R.layout.dialog_add_photo)
 //        window?.setGravity(Gravity.BOTTOM)
         setupListeners()
+        setupBottomButtonText()
     }
 
     private fun setupListeners() {
@@ -36,5 +37,11 @@ open class AddPhotoDialog(context: Context) : Dialog(context, R.style.ChooseDial
 
     open fun onSkipClick() {
 
+    }
+
+    open fun setupBottomButtonText(text: String? = null) {
+        text?.let {
+            buttonSkip.text = text
+        }
     }
 }

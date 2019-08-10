@@ -21,6 +21,8 @@ import com.example.ukrainianholes.data.remote.entity.AccidentRate.LOW
 import com.example.ukrainianholes.data.remote.entity.AccidentRate.MEDIUM
 import com.example.ukrainianholes.data.remote.entity.HoleResponse
 import com.example.ukrainianholes.data.remote.entity.Photo
+import com.example.ukrainianholes.feature.add_hole.add.PhotoItem
+import com.example.ukrainianholes.feature.add_hole.add.PhotoRecyclerAdapter
 import com.example.ukrainianholes.feature.add_hole.map.MapActivity
 import com.example.ukrainianholes.feature.help.HelpActivity
 import kotlinx.android.synthetic.main.activity_hole_details.*
@@ -153,6 +155,14 @@ class HoleDetailsActivity : AppCompatActivity() {
                 cardMedium.foreground = null
                 cardHigh.foreground = getDrawable(R.drawable.bg_button_stroke)
             }
+        }
+
+        recyclerWas.adapter = PhotoRecyclerAdapter().also { adapter ->
+            adapter.setItems(hole.photos.map { PhotoItem(it.id) })
+        }
+
+        recyclerNow.adapter = PhotoRecyclerAdapter().also { adapter ->
+            adapter.setItems(hole.fixedPhotos.map { PhotoItem(it.id) })
         }
     }
 

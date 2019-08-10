@@ -18,53 +18,66 @@ import org.jetbrains.annotations.NotNull
 
 open class PhotoRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    open fun onItemClick(id: Long) {}
+    open fun onAddItemClick() {}
 
-    private val items = mutableListOf<Long>()
+    open fun onPhotoClick(id: Long) {}
 
-    fun setItems(items: List<Long>) {
+    private val items = mutableListOf<AdapterItem>()
+
+    fun setItems(items: List<AdapterItem>) {
         this.items.clear()
         this.items.addAll(items)
         notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
-        return items.size + 1
+        return items.size
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == items.size) 0 else 1
+        return items[position].type.id
     }
 
     override fun onCreateViewHolder(@NotNull parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == 1) {
-            PhotoViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_photo, parent, false))
-        } else {
-            PlaceholderViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.view_photo_placeholder,
-                    parent,
-                    false
+        return when (viewType) {
+            ItemType.PHOTO_ITEM.id ->
+                PhotoViewHolder(
+                    LayoutInflater
+                        .from(parent.context)
+                        .inflate(R.layout.recycler_item_photo, parent, false)
                 )
-            )
+            ItemType.ADD_ITEM.id ->
+                PlaceholderViewHolder(
+                    LayoutInflater.from(parent.context).inflate(
+                        R.layout.view_photo_placeholder,
+                        parent,
+                        false
+                    )
+                )
+            else -> TODO("Add this type")
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (position == items.size) return
+        when (val item = items[position]) {
+            is PhotoItem -> {
+                holder.itemView.setOnClickListener { onPhotoClick(item.photoId) }
+                (holder as PhotoViewHolder).bind(item)
+            }
+            is AddItem -> {
+                holder.itemView.setOnClickListener { onAddItemClick() }
+            }
+        }
+    }
 
-        val task = items[position]
-        holder.itemView.setOnClickListener {
-            onItemClick(task)
-        }
-        if (holder is PhotoViewHolder) {
-            holder.bind(task)
-        }
+    fun addItems(vararg photoItem: PhotoItem) {
+        items.addAll(0, photoItem.toList())
+        notifyDataSetChanged()
     }
 
     class PhotoViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
         LayoutContainer {
-        fun bind(id: Long) {
+        fun bind(id: AdapterItem) {
             Glide.with(imagePhoto).clear(imagePhoto)
             Glide
                 .with(imagePhoto)

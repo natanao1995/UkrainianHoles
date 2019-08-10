@@ -14,7 +14,7 @@ object ViewModelModule {
         viewModel { HomeViewModel(get()) }
         viewModel { MapViewModel(androidContext(), get()) }
         viewModel { AllHolesViewModel(get()) }
-        viewModel { AddHoleViewModel(get()) }
+        viewModel { AddHoleViewModel(androidContext(), get(), get()) }
         viewModel { HoleDetailsViewModel(get()) }
     }
 }
