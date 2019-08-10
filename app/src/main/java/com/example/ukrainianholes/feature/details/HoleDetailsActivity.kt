@@ -18,6 +18,8 @@ import com.example.ukrainianholes.architecture.base.ResultLoading
 import com.example.ukrainianholes.architecture.base.ResultSuccess
 import com.example.ukrainianholes.data.remote.entity.HoleResponse
 import com.example.ukrainianholes.data.remote.entity.Photo
+import com.example.ukrainianholes.feature.add_hole.add.PhotoItem
+import com.example.ukrainianholes.feature.add_hole.add.PhotoRecyclerAdapter
 import com.example.ukrainianholes.feature.add_hole.map.MapActivity
 import com.example.ukrainianholes.feature.help.HelpActivity
 import kotlinx.android.synthetic.main.activity_hole_details.*
@@ -124,6 +126,14 @@ class HoleDetailsActivity : AppCompatActivity() {
 
         updateLikeState(hole.like)
         showLikeProgress(false)
+
+        recyclerWas.adapter = PhotoRecyclerAdapter().also { adapter ->
+            adapter.setItems(hole.photos.map { PhotoItem(it.id) })
+        }
+
+        recyclerNow.adapter = PhotoRecyclerAdapter().also { adapter ->
+            adapter.setItems(hole.fixedPhotos.map { PhotoItem(it.id) })
+        }
     }
 
     private fun loadAvatar(photo: Photo?) {

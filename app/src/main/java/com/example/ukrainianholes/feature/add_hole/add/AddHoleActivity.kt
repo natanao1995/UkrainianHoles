@@ -7,6 +7,8 @@ import com.example.ukrainianholes.R
 import com.example.ukrainianholes.architecture.base.BaseActivity
 import com.example.ukrainianholes.architecture.base.ResultError
 import com.example.ukrainianholes.architecture.base.ResultSuccess
+import com.example.ukrainianholes.feature.add_hole.AddPhotoDialog
+import com.example.ukrainianholes.feature.add_hole.map.MapActivity
 import com.example.ukrainianholes.feature.home.HomeActivity
 import com.example.ukrainianholes.util.afterTextChanged
 import kotlinx.android.synthetic.main.activity_add_hole.*
@@ -20,6 +22,8 @@ class AddHoleActivity : BaseActivity() {
         const val EXTRA_KEY_ADDRESS = "key_address"
         const val EXTRA_KEY_IMAGE_ID = "key_image_id"
     }
+
+    private var addPhotoDialog: AddPhotoDialog? = null
 
     private val viewModel by viewModel<AddHoleViewModel>()
 
@@ -61,7 +65,35 @@ class AddHoleActivity : BaseActivity() {
         viewModel.newHoleLiveData.observe(this, Observer { hole ->
             hole ?: return@Observer
 
-            (recyclerPhotos.adapter as? PhotoRecyclerAdapter)?.setItems(hole.photos)
+            val items = ArrayList<AdapterItem>(hole.photos.map { PhotoItem(it) })
+            items.add(AddItem())
+            (recyclerPhotos.adapter as? PhotoRecyclerAdapter)?.setItems(items)
+        })
+
+        viewModel.takePhotoFromGalleryIntent.observe(this, Observer { intent ->
+            when (intent) {
+                is ResultSuccess -> startActivityForResult(intent.data, MapActivity.REQUEST_CODE_GALLERY)
+                is ResultError -> showError("Упс, щось пішло не так")
+            }
+        })
+
+        viewModel.takePhotoFromCameraIntent.observe(this, Observer { intent ->
+            when (intent) {
+                is ResultSuccess -> startActivityForResult(intent.data, MapActivity.REQUEST_CODE_CAMERA)
+                is ResultError -> showError("Упс, щось пішло не так")
+            }
+        })
+
+        viewModel.uploadedFileIdLiveData.observe(this, Observer { id ->
+            id ?: return@Observer
+
+            when (id) {
+                is ResultSuccess -> {
+                    viewModel.addPhoto(id.data)
+                    (recyclerPhotos.adapter as? PhotoRecyclerAdapter)?.addItems(PhotoItem(id.data))
+                }
+                is ResultError -> showError("Упс, щось пішло не так")
+            }
         })
     }
 
@@ -69,9 +101,47 @@ class AddHoleActivity : BaseActivity() {
         editTextComment.afterTextChanged {
             viewModel.setAddress(it)
         }
-        recyclerPhotos.adapter = PhotoRecyclerAdapter()
+        recyclerPhotos.adapter = object : PhotoRecyclerAdapter() {
+            override fun onAddItemClick() {
+                super.onAddItemClick()
+                showAddPhotoDialog()
+            }
+
+            override fun onPhotoClick(id: Long) {
+                super.onPhotoClick(id)
+            }
+        }
         buttonNext.setOnClickListener {
             viewModel.addHole()
         }
+    }
+
+    private fun showAddPhotoDialog() {
+        addPhotoDialog?.let {
+            it.show()
+            return
+        }
+
+        addPhotoDialog = object : AddPhotoDialog(this) {
+            override fun takeFromCamera() {
+                super.takeFromCamera()
+                viewModel.takePhotoFromCamera(this@AddHoleActivity)
+            }
+
+            override fun takeFromGallery() {
+                super.takeFromGallery()
+                viewModel.takePhotoFromGallery(this@AddHoleActivity)
+            }
+
+            override fun onSkipClick() {
+                super.onSkipClick()
+                dismiss()
+            }
+
+            override fun setupBottomButtonText(text: String?) {
+                super.setupBottomButtonText("Скасувати")
+            }
+        }
+        addPhotoDialog?.show()
     }
 }
