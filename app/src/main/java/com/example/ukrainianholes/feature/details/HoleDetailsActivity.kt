@@ -56,7 +56,10 @@ class HoleDetailsActivity : AppCompatActivity() {
             showLikeProgress(false)
 
             when (like) {
-                is ResultSuccess -> updateLikeState(like.data)
+                is ResultSuccess -> {
+                    viewModel.setLikeState(like.data)
+                    updateLikeState(like.data)
+                }
                 is ResultError -> showError()
                 is ResultLoading -> showLikeProgress(true)
             }

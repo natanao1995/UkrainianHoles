@@ -58,4 +58,8 @@ class HoleDetailsViewModel(
     fun setHole(hole: HoleResponse) {
         holeLiveData.value = hole
     }
+
+    fun setLikeState(like: Boolean) {
+        holeLiveData.value?.like = like
+    }
 }
