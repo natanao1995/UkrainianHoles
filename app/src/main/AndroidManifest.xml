@@ -67,6 +67,7 @@
         <activity android:name=".feature.all_holes.AllHolesActivity"/>
         <activity android:name=".feature.details.HoleDetailsActivity"/>
         <activity android:name=".feature.help.HelpActivity"/>
+        <activity android:name=".feature.photo.PhotoViewerActivity"/>
     </application>
 
 </manifest>

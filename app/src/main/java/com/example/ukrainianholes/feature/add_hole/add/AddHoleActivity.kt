@@ -3,6 +3,7 @@ package com.example.ukrainianholes.feature.add_hole.add
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import com.example.ukrainianholes.Constants
 import com.example.ukrainianholes.R
 import com.example.ukrainianholes.architecture.base.BaseActivity
 import com.example.ukrainianholes.architecture.base.ResultError
@@ -13,6 +14,7 @@ import com.example.ukrainianholes.data.remote.entity.AccidentRate.MEDIUM
 import com.example.ukrainianholes.feature.add_hole.AddPhotoDialog
 import com.example.ukrainianholes.feature.add_hole.map.MapActivity
 import com.example.ukrainianholes.feature.home.HomeActivity
+import com.example.ukrainianholes.feature.photo.PhotoViewerActivity
 import com.example.ukrainianholes.util.afterTextChanged
 import kotlinx.android.synthetic.main.activity_add_hole.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -128,6 +130,13 @@ class AddHoleActivity : BaseActivity() {
             override fun onAddItemClick() {
                 super.onAddItemClick()
                 showAddPhotoDialog()
+            }
+
+            override fun onPhotoClick(id: Long) {
+                super.onPhotoClick(id)
+                val intent = Intent(this@AddHoleActivity, PhotoViewerActivity::class.java)
+                intent.putExtra(PhotoViewerActivity.KEY_PHOTO_URL, "${Constants.BASE_URL}file/$id")
+                startActivity(intent)
             }
         }
         buttonNext.setOnClickListener {

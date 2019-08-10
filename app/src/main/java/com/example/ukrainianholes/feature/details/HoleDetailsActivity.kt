@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.example.ukrainianholes.Constants
 import com.example.ukrainianholes.R
 import com.example.ukrainianholes.architecture.base.ResultError
 import com.example.ukrainianholes.architecture.base.ResultLoading
@@ -25,6 +26,7 @@ import com.example.ukrainianholes.feature.add_hole.add.PhotoItem
 import com.example.ukrainianholes.feature.add_hole.add.PhotoRecyclerAdapter
 import com.example.ukrainianholes.feature.add_hole.map.MapActivity
 import com.example.ukrainianholes.feature.help.HelpActivity
+import com.example.ukrainianholes.feature.photo.PhotoViewerActivity
 import kotlinx.android.synthetic.main.activity_hole_details.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -173,7 +175,15 @@ class HoleDetailsActivity : AppCompatActivity() {
         }
 
         if(hole.photos.isNotEmpty()) {
-            recyclerWas.adapter = PhotoRecyclerAdapter().also { adapter ->
+            recyclerWas.adapter = object : PhotoRecyclerAdapter(){
+                override fun onPhotoClick(id: Long) {
+                    super.onPhotoClick(id)
+
+                    val intent = Intent(this@HoleDetailsActivity, PhotoViewerActivity::class.java)
+                    intent.putExtra(PhotoViewerActivity.KEY_PHOTO_URL, "${Constants.BASE_URL}file/$id")
+                    startActivity(intent)
+                }
+            }.also { adapter ->
                 adapter.setItems(hole.photos.map { PhotoItem(it.id) })
             }
         } else {
@@ -182,7 +192,15 @@ class HoleDetailsActivity : AppCompatActivity() {
         }
 
         if(hole.fixedPhotos.isNotEmpty()) {
-            recyclerNow.adapter = PhotoRecyclerAdapter().also { adapter ->
+            recyclerNow.adapter =  object : PhotoRecyclerAdapter(){
+                override fun onPhotoClick(id: Long) {
+                    super.onPhotoClick(id)
+
+                    val intent = Intent(this@HoleDetailsActivity, PhotoViewerActivity::class.java)
+                    intent.putExtra(PhotoViewerActivity.KEY_PHOTO_URL, "${Constants.BASE_URL}file/$id")
+                    startActivity(intent)
+                }
+            }.also { adapter ->
                 adapter.setItems(hole.fixedPhotos.map { PhotoItem(it.id) })
             }
         } else {
