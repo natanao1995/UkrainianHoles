@@ -3,6 +3,7 @@ package com.example.ukrainianholes.feature.details
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -12,6 +13,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.ukrainianholes.R
+import com.example.ukrainianholes.architecture.base.ResultError
+import com.example.ukrainianholes.architecture.base.ResultLoading
 import com.example.ukrainianholes.architecture.base.ResultSuccess
 import com.example.ukrainianholes.data.remote.entity.HoleResponse
 import com.example.ukrainianholes.data.remote.entity.Photo
@@ -41,10 +44,24 @@ class HoleDetailsActivity : AppCompatActivity() {
             startActivity(intent)
         })
         viewModel.likeHoleLiveData.observe(this, Observer { like ->
-            if (like is ResultSuccess) {
-                updateLikeState(like.data)
+            showLikeProgress(false)
+
+            when (like) {
+                is ResultSuccess -> updateLikeState(like.data)
+                is ResultError -> showError()
+                is ResultLoading -> showLikeProgress(true)
             }
         })
+    }
+
+    private fun showLikeProgress(show: Boolean) {
+        if (show) {
+            imageLike.visibility = View.GONE
+            progressLike.visibility = View.VISIBLE
+        } else {
+            imageLike.visibility = View.VISIBLE
+            progressLike.visibility = View.GONE
+        }
     }
 
     private fun updateLikeState(isLike: Boolean) {
@@ -97,7 +114,9 @@ class HoleDetailsActivity : AppCompatActivity() {
         loadAvatar(hole.photos.firstOrNull())
         textComment.text = hole.comment
         textAddress.text = hole.address
+
         updateLikeState(hole.like)
+        showLikeProgress(false)
     }
 
     private fun loadAvatar(photo: Photo?) {
