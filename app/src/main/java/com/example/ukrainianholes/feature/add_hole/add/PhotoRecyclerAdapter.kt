@@ -62,7 +62,7 @@ open class PhotoRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         when (val item = items[position]) {
             is PhotoItem -> {
                 holder.itemView.setOnClickListener { onPhotoClick(item.photoId) }
-                (holder as PhotoViewHolder).bind(item)
+                (holder as PhotoViewHolder).bind(item.photoId)
             }
             is AddItem -> {
                 holder.itemView.setOnClickListener { onAddItemClick() }
@@ -77,7 +77,7 @@ open class PhotoRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
     class PhotoViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
         LayoutContainer {
-        fun bind(id: AdapterItem) {
+        fun bind(id: Long) {
             Glide.with(imagePhoto).clear(imagePhoto)
             Glide
                 .with(imagePhoto)
