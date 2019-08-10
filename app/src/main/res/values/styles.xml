@@ -10,6 +10,13 @@
         <!--<item name="colorAccent">@color/colorAccent</item>-->
     </style>
 
+    <style name="Launcher" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/bg_splash_screen</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="AppTheme.Button" parent="TextAppearance.AppCompat.Button">
         <item name="android:background">@drawable/bg_button</item>
         <item name="android:padding">16dp</item>
