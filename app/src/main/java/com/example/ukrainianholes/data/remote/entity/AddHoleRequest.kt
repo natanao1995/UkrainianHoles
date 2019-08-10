@@ -5,13 +5,17 @@ import com.google.gson.annotations.SerializedName
 
 data class AddHoleRequest(
     @SerializedName("address")
-    val address: String,
+    var address: String? = null,
     @SerializedName("comment")
-    val comment: String,
+    var comment: String? = null,
     @SerializedName("lat")
-    val lat: Float,
+    var lat: Double? = null,
     @SerializedName("lng")
-    val lng: Float,
+    var lng: Double? = null,
     @SerializedName("photos")
-    val photos: List<Long>
-)
+    var photos: MutableList<Long> = mutableListOf(),
+    @SerializedName("accident_rate")
+    var accidentRate: Int? = null
+) {
+    fun isFilled(): Boolean = address != null && comment != null && lat != null && lng != null && accidentRate != null
+}

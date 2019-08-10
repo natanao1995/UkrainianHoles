@@ -103,11 +103,25 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
         })
     }
 
-    private fun startAddHoleActivity(holeId: Long? = null) {
+    private fun startAddHoleActivity(imageId: Long? = null) {
         val intent = Intent(this, AddHoleActivity::class.java)
-        holeId?.let {
-            intent.putExtra("123321", it)
+
+        val lat = (viewModel.latLngAddressLiveData.value as? ResultSuccess)?.data?.latLng?.latitude
+        val lng = (viewModel.latLngAddressLiveData.value as? ResultSuccess)?.data?.latLng?.longitude
+        val address = (viewModel.latLngAddressLiveData.value as? ResultSuccess)?.data?.address
+
+        if (lat == null || lng == null || address == null) {
+            showError("Оберіть реальну адресу")
+            return
         }
+
+        imageId?.let {
+            intent.putExtra(AddHoleActivity.EXTRA_KEY_IMAGE_ID, it)
+        }
+        intent.putExtra(AddHoleActivity.EXTRA_KEY_LAT, lat)
+        intent.putExtra(AddHoleActivity.EXTRA_KEY_LNG, lng)
+        intent.putExtra(AddHoleActivity.EXTRA_KEY_ADDRESS, address)
+
         startActivity(intent)
     }
 
@@ -141,11 +155,9 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_CODE_GALLERY -> {
-                    showMessage(data?.data.toString())
                     viewModel.uploadFileFromGallery(data?.data)
                 }
                 REQUEST_CODE_CAMERA -> {
-                    showMessage(viewModel.imageUri.toString())
                     viewModel.uploadFileFromCamera()
                 }
             }

@@ -1,5 +1,6 @@
 package com.example.ukrainianholes.architecture.di
 
+import com.example.ukrainianholes.feature.add_hole.add.AddHoleViewModel
 import com.example.ukrainianholes.feature.add_hole.map.MapViewModel
 import com.example.ukrainianholes.feature.all_holes.AllHolesViewModel
 import com.example.ukrainianholes.feature.home.HomeViewModel
@@ -12,5 +13,6 @@ object ViewModelModule {
         viewModel { HomeViewModel(get()) }
         viewModel { MapViewModel(androidContext(), get()) }
         viewModel { AllHolesViewModel(get()) }
+        viewModel { AddHoleViewModel(get()) }
     }
 }

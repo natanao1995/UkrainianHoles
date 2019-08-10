@@ -27,5 +27,7 @@ data class HoleResponse(
     @SerializedName("status")
     val status: Status,
     @SerializedName("updated_at")
-    val updatedAt: Long
+    val updatedAt: Long,
+    @SerializedName("accident_rate")
+    val accidentRate: Int
 )

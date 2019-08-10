@@ -50,24 +50,6 @@
                 android:name="com.example.ukrainianholes.feature.add_hole.map.MapActivity"
                 android:label="@string/title_activity_map">
         </activity>
-        <activity
-                android:name=".feature.signin.SigninActivity"
-                android:windowSoftInputMode="adjustResize">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN"/> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
-            <!-- </intent-filter> -->
-        </activity>
-        <activity android:name=".feature.tasklist.TaskListActivity"/>
-        <activity
-                android:name=".feature.addtask.AddTaskActivity"
-                android:windowSoftInputMode="adjustResize"/>
-        <activity
-                android:name=".feature.taskdetails.TaskDetailsActivity"
-                android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity android:name=".feature.base.BaseActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -76,7 +58,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".feature.home.HomeActivity"/>
-        <activity android:name=".feature.add_hole.add.AddHoleActivity"/>
+        <activity
+                android:name=".feature.add_hole.add.AddHoleActivity"
+                android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".feature.all_holes.AllHolesActivity"/>
     </application>
 
