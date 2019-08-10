@@ -31,6 +31,13 @@ class HoleDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_hole_details)
         setupListeners()
         setupObserve()
+
+        val hole = intent.getParcelableExtra<HoleResponse>(KEY_HOLE)
+        if (hole == null) {
+            showError()
+            finish()
+        }
+        viewModel.setHole(hole)
     }
 
     private fun setupObserve() {
@@ -126,5 +133,9 @@ class HoleDetailsActivity : AppCompatActivity() {
             .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(16)))
             .error(ColorDrawable(ContextCompat.getColor(imageAvatar.context, R.color.placeholderGray)))
             .into(imageAvatar)
+    }
+
+    companion object {
+        const val KEY_HOLE = "key_hole"
     }
 }

@@ -1,6 +1,7 @@
 package com.example.ukrainianholes.feature.all_holes
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.example.ukrainianholes.R
@@ -9,6 +10,8 @@ import com.example.ukrainianholes.architecture.base.ResultSuccess
 import com.example.ukrainianholes.data.remote.entity.Filter.ALL
 import com.example.ukrainianholes.data.remote.entity.Filter.MY
 import com.example.ukrainianholes.data.remote.entity.Filter.NEAR
+import com.example.ukrainianholes.data.remote.entity.HoleResponse
+import com.example.ukrainianholes.feature.details.HoleDetailsActivity
 import com.example.ukrainianholes.feature.home.HoleRecyclerAdapter
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -46,7 +49,14 @@ class AllHolesActivity : BaseActivity() {
 
     @SuppressLint("MissingPermission")
     private fun setupUi() {
-        recyclerAllHoles.adapter = HoleRecyclerAdapter()
+        recyclerAllHoles.adapter = object : HoleRecyclerAdapter() {
+            override fun onItemClick(lastWin: HoleResponse) {
+                super.onItemClick(lastWin)
+                val intent = Intent(this@AllHolesActivity, HoleDetailsActivity::class.java)
+                intent.putExtra(HoleDetailsActivity.KEY_HOLE, lastWin)
+                startActivity(intent)
+            }
+        }
         recyclerAllHoles.isNestedScrollingEnabled = false
         imageBack.setOnClickListener {
             onBackPressed()

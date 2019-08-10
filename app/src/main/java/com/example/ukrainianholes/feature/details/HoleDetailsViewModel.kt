@@ -54,4 +54,8 @@ class HoleDetailsViewModel(
         }
         likeHoleLiveData.postValue(result)
     }
+
+    fun setHole(hole: HoleResponse) {
+        holeLiveData.value = hole
+    }
 }

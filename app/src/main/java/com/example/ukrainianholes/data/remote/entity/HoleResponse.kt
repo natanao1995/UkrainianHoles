@@ -1,8 +1,11 @@
 package com.example.ukrainianholes.data.remote.entity
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class HoleResponse(
     @SerializedName("id")
     val id: Long,
@@ -28,4 +31,4 @@ data class HoleResponse(
     val status: Status,
     @SerializedName("updated_at")
     val updatedAt: Long
-)
+): Parcelable
