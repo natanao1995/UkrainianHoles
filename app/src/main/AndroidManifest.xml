@@ -51,7 +51,9 @@
                 android:name="com.example.ukrainianholes.feature.add_hole.map.MapActivity"
                 android:label="@string/title_activity_map">
         </activity>
-        <activity android:name=".feature.base.BaseActivity">
+        <activity
+                android:name=".feature.base.BaseActivity"
+                android:theme="@style/Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
