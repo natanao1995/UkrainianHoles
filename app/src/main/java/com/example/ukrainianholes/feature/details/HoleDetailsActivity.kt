@@ -136,8 +136,18 @@ class HoleDetailsActivity : AppCompatActivity() {
 
     private fun loadHoleInfo(hole: HoleResponse) {
         loadAvatar(hole.photos.firstOrNull())
-        textComment.text = hole.comment
-        textAddress.text = hole.address
+
+        if (hole.comment.isBlank()) {
+            textComment.visibility = View.GONE
+        } else {
+            textComment.text = hole.comment
+        }
+
+        if(hole.address.isBlank()) {
+            textAddress.visibility = View.GONE
+        } else {
+            textAddress.text = hole.address
+        }
 
         textTitle.text = "Яма #${hole.id}"
 
@@ -162,12 +172,22 @@ class HoleDetailsActivity : AppCompatActivity() {
             }
         }
 
-        recyclerWas.adapter = PhotoRecyclerAdapter().also { adapter ->
-            adapter.setItems(hole.photos.map { PhotoItem(it.id) })
+        if(hole.photos.isNotEmpty()) {
+            recyclerWas.adapter = PhotoRecyclerAdapter().also { adapter ->
+                adapter.setItems(hole.photos.map { PhotoItem(it.id) })
+            }
+        } else {
+            textWas.visibility = View.GONE
+            recyclerWas.visibility = View.GONE
         }
 
-        recyclerNow.adapter = PhotoRecyclerAdapter().also { adapter ->
-            adapter.setItems(hole.fixedPhotos.map { PhotoItem(it.id) })
+        if(hole.fixedPhotos.isNotEmpty()) {
+            recyclerNow.adapter = PhotoRecyclerAdapter().also { adapter ->
+                adapter.setItems(hole.fixedPhotos.map { PhotoItem(it.id) })
+            }
+        } else {
+            textNow.visibility = View.GONE
+            recyclerNow.visibility = View.GONE
         }
     }
 
