@@ -6,7 +6,7 @@ import android.os.Bundle
 import com.example.ukrainianholes.R
 import kotlinx.android.synthetic.main.dialog_add_photo.*
 
-open class AddPhotoDialog(context: Context) : Dialog(context) {
+open class AddPhotoDialog(context: Context) : Dialog(context, R.style.ChooseDialog) {
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_add_photo)

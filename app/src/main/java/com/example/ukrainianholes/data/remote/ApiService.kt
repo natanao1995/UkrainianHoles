@@ -6,6 +6,7 @@ import com.example.ukrainianholes.data.remote.entity.Filter.MY
 import com.example.ukrainianholes.data.remote.entity.GetStatsResponse
 import com.example.ukrainianholes.data.remote.entity.HoleResponse
 import okhttp3.MultipartBody
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -30,4 +31,10 @@ interface ApiService {
     suspend fun addHole(
         @Body body: AddHoleRequest
     ): Response<HoleResponse>
+
+    @POST("yamas/{id}/like")
+    suspend fun setLike(@Path(value = "id") id: Long): Response<ResponseBody>
+
+    @DELETE("yamas/{id}/like")
+    suspend fun unsetLike(@Path(value = "id") id: Long): Response<ResponseBody>
 }

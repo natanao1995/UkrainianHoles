@@ -3,6 +3,7 @@ package com.example.ukrainianholes.architecture.di
 import com.example.ukrainianholes.feature.add_hole.add.AddHoleViewModel
 import com.example.ukrainianholes.feature.add_hole.map.MapViewModel
 import com.example.ukrainianholes.feature.all_holes.AllHolesViewModel
+import com.example.ukrainianholes.feature.details.HoleDetailsViewModel
 import com.example.ukrainianholes.feature.home.HomeViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
@@ -14,5 +15,6 @@ object ViewModelModule {
         viewModel { MapViewModel(androidContext(), get()) }
         viewModel { AllHolesViewModel(get()) }
         viewModel { AddHoleViewModel(get()) }
+        viewModel { HoleDetailsViewModel(get()) }
     }
 }

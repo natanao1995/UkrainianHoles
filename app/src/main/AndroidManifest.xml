@@ -62,6 +62,8 @@
                 android:name=".feature.add_hole.add.AddHoleActivity"
                 android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".feature.all_holes.AllHolesActivity"/>
+        <activity android:name=".feature.details.HoleDetailsActivity"/>
+        <activity android:name=".feature.help.HelpActivity"/>
     </application>
 
 </manifest>
