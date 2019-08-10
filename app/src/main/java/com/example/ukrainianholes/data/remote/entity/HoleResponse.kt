@@ -20,7 +20,7 @@ data class HoleResponse(
     @SerializedName("lat")
     val lat: Double,
     @SerializedName("like")
-    val like: Boolean,
+    var like: Boolean,
     @SerializedName("likes_number")
     val likesNumber: Int,
     @SerializedName("lng")
